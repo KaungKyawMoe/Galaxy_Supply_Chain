@@ -1,9 +1,6 @@
 
-
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Common/apihelper.dart';
 import 'package:flutter_app/Models/UserDto.dart';
 import 'package:flutter_app/Repositories/user_repo.dart';
 import 'package:flutter_app/Services/ApiResponse.dart';
@@ -20,9 +17,13 @@ class UserProvider extends ChangeNotifier{
 
     ApiResponse response = await userRepo.Login(_user);
     if(response.statusCode == 200){
-      var userData = UserDto.fromJson(json.decode(response.data));
 
-      if(userData.password.toString() == _user.password.toString()){
+      var usersData = jsonDecode(response.data);
+
+      List<UserDto> userList = (usersData as List).map((x) => UserDto.fromJson(x)).toList();
+
+      if((userList.first.password.toString() == "null" ? "" : userList.first.password.toString()) == _user.password.toString()){
+        user = userList.first;
         return true;
       }
       else{

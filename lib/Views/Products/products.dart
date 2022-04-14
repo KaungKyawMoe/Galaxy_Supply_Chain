@@ -9,6 +9,8 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
 
+  bool isInit = true;
+
   @override
   void initState(){
     // TODO: implement initState
@@ -21,7 +23,11 @@ class _ProductsState extends State<Products> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
-    Provider.of<ProductProvider>(context).GetUsrCode();
+    if(isInit){
+      Provider.of<ProductProvider>(context).GetUsrCode();
+      isInit = false;
+    }
+
   }
 
   @override
@@ -33,46 +39,55 @@ class _ProductsState extends State<Products> {
           children: productProvider.usrCodeList.map((e) {
             return InkWell(
               onTap: (){
-                Navigator.push(context,MaterialPageRoute(builder: (context) => ProductDetails(e),));
+                //Navigator.push(context,MaterialPageRoute(builder: (context) => ProductDetails(e),));
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return ProductDetails(e);
+                    });
               },
               child: Card(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /*
-                        Image.network(e.imageurl.toString(),
-                          width: 100,
-                          height: 50,),
-                         */
-                        Image.asset('assets/images/default.png',
-                        height: 100,width: 100,),
-                        Expanded(
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16.0, 8, 8, 8),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade100),
+                              ),
+                              width: 90,
+                              height: 80,
+                              child: Image.asset(e.imageurl ?? 'assets/images/default.png'),
+                              // child: PhotoView(
+                              //   imageProvider:
+                              //   AssetImage('assets/images/strawbarry.jpg'),
+                              // ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(e.description.toString(),
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),),
-                              Text(e.saleprice.toString(),
+
+                              Text(
+                                e.description.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
-                                ),),
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                e.saleprice.toString(),
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+
                             ],
                           ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            OutlinedButton(
-                                onPressed: (){},
-                                child: Text('Add To Cart'),
-                            ),
-                          ],
                         )
                       ],
                     ),

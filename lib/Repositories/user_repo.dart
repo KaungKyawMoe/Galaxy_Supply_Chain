@@ -28,7 +28,7 @@ class UserRepo{
         PsqlDbTypes: NpgsqlDbType.Varchar,
         PsqlParameterDirection: ParameterDirection.Input,
         PsqlParameterName: '_username',
-        PsqlParameterValue: userDto.password.toString()
+        PsqlParameterValue: userDto.name.toString()
       )
     );
     apiHelper.Parameters!.add(paramList);

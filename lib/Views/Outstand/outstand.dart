@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/Models/UserDto.dart';
+import 'package:flutter_app/Providers/outstand_provider.dart';
+import 'package:flutter_app/Providers/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class Outstand extends StatefulWidget {
   @override
@@ -9,78 +14,42 @@ class Outstand extends StatefulWidget {
 }
 
 class _OutstandState extends State<Outstand> {
+
   Icon searchicon = new Icon(Icons.search);
+
+  late UserDto user;
+
+  NumberFormat myFormat = NumberFormat.decimalPattern('en_us');
+
+  bool isInit = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    if(isInit){
+      GetOutstandData();
+
+      isInit = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          centerTitle: false,
-          leading: SizedBox(),
-          title: Transform(
-            transform: Matrix4.translationValues(-25, 0, 0),
-            child: Text(
-              'OutStand LIst',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              icon: searchicon,
-              color: Colors.black,
-              onPressed: () {
 
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.calendar_view_month),
-              color: Colors.black,
-              onPressed: () {
-                //pickDate(context);
-                showDateRangePicker(
-                    context: context,
-                    firstDate:  DateTime.now(),
-                    lastDate: DateTime.now().add(Duration(days: 100)),
-                    builder: (context, child) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxWidth: 400.0,
-                              maxHeight: 500.0,
-                            ),
-                            child: child,
-                          )
-                        ],
-                      );
-                    }
-
-                );
-
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.local_print_shop_sharp),
-              color: Colors.black,
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.shopping_cart),
-              color: Colors.black,
-              onPressed: () {},
-            ),
-          ]),
-      body: Column(
-        children: <Widget>[
-          ListTile(
-            tileColor: Color(0x66d3d3d3),
-            title: Row(children: <Widget>[
+    return Consumer<OutstandProvider>(
+      builder: (context, outstandProvider, child) {
+        return Column(
+          children: <Widget>[
+            Row(children: <Widget>[
               Expanded(
                   child: Text(
                     "Date",
@@ -118,34 +87,91 @@ class _OutstandState extends State<Outstand> {
                     ),
                   )),
             ]),
-          ),
-          Expanded(
-            flex: 2,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-
-              ],
+            SizedBox(height:5),
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: outstandProvider.outstandList.map((x){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3.0),
+                    child: Row(children: <Widget>[
+                      Expanded(
+                          child: Text(
+                            DateFormat('yyyy-MM-dd').format(x.date as DateTime),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          )),
+                      Expanded(
+                          child: Text(
+                            x.docid ?? "",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          )),
+                      Expanded(
+                          child: Text(
+                            x.invoicetype.toString(),
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          )),
+                      Expanded(
+                          child: Text(
+                            x.amount.toString(),
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          )),
+                    ]),
+                  );
+                }).toList(),
+              ),
             ),
-          ),
-          ListTile(
-            tileColor: Color(0x66d3d3d3),
-            title: Row(children: <Widget>[
+            SizedBox(height:5),
+            Row(children: <Widget>[
               Expanded(
-                  child: Text(
-                    "Total",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  )),
-            ]),
-          ),
+                child: Text(
+                  "Total",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
 
-        ],
-      ),
+              Expanded(
+                child: Text(
+                  myFormat.format(outstandProvider.totalAmount),
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ]),
+          ],
+        );
+      },
     );
+  }
+
+  Future<void> GetOutstandData() async{
+
+    user = Provider.of<UserProvider>(context,listen:false).user;
+
+    Provider.of<OutstandProvider>(context,listen:false).GetOutstands(user.userid!.toInt());
+
   }
 }
 

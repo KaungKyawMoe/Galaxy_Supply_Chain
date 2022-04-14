@@ -11,7 +11,11 @@ class _ShoppingCartState extends State<ShoppingCart> {
   Widget build(BuildContext context) {
     return Consumer<ShoppingCartProvider>(
       builder: (context, shoppingCartProvider, child) {
-        return ListView(
+        return shoppingCartProvider.cart.length == 0 ?
+          Center(
+            child : Text("Cart is Empty"),
+          ) :
+          ListView(
           children: shoppingCartProvider.cart.map((e){
             return Card(
               child: Column(
@@ -50,7 +54,9 @@ class _ShoppingCartState extends State<ShoppingCart> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              shoppingCartProvider.RemoveFromCart(e);
+                            },
                             icon: Icon(Icons.restore_from_trash),
                           ),
                         ],

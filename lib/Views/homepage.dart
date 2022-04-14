@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/Providers/product_provider.dart';
 import 'package:flutter_app/Providers/shoppingcart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -27,12 +28,12 @@ class _HomePageState extends State<HomePage> {
     Outstand(),
   ];
 
-
+  TextEditingController searchTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
 
-    var provider = Provider.of<ShoppingCartProvider>(context,listen:true);
+    var shoppingCartProvider = Provider.of<ShoppingCartProvider>(context,listen:true);
 
     return Scaffold(
       appBar: selectedIndex > 0 ? AppBar(
@@ -42,6 +43,7 @@ class _HomePageState extends State<HomePage> {
         title: Container(
           width: double.infinity,
           child:TextField(
+            controller: searchTextController,
             decoration: InputDecoration(
               hintText: 'search ...',
               contentPadding: EdgeInsets.all(2.0),
@@ -56,15 +58,24 @@ class _HomePageState extends State<HomePage> {
               prefixIcon: Icon(Icons.search),
               suffixIcon: IconButton(
                 onPressed: (){
-
+                  setState((){
+                    searchTextController.text = "";
+                    Provider.of<ProductProvider>(context,listen:false).Search("");
+                  });
                 },
                 icon:Icon(Icons.clear)
-              )
+              ),
             ),
+            onSubmitted: (data){
+              Provider.of<ProductProvider>(context,listen:false).Search(data);
+            },
           )
         ),
       ),
-      body:widgetList[selectedIndex],
+      body:Padding(
+        padding: EdgeInsets.all(8.0),
+        child: widgetList[selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
         backgroundColor: Theme.of(context).primaryColor,
@@ -81,9 +92,10 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
               icon: Badge(
-                padding: EdgeInsets.all(4.0),
-                showBadge: true,
-                badgeContent: Text('10',
+                padding: EdgeInsets.all(5.0),
+                showBadge: shoppingCartProvider.cart.length > 0 ? true : false,
+                badgeContent: Text(
+                  shoppingCartProvider.cart.length.toString(),
                 style: TextStyle(
                   color:Colors.white,
                   fontSize: 12,

@@ -12,6 +12,12 @@ class ShoppingCartProvider extends ChangeNotifier{
     return true;
   }
 
+  bool RemoveFromCart(ShoppingCartItem item){
+    cart.remove(item);
+    notifyListeners();
+    return true;
+  }
+
   Future<bool> CheckOutOrder() async{
     return true;
   }

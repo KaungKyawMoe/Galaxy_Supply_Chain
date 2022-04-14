@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
 
     return Scaffold(
       body: Container(
-        color: Theme.of(context).primaryColor,
+        //color: Theme.of(context).primaryColor,
         height: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
@@ -47,6 +47,7 @@ class _LoginState extends State<Login> {
 
             SizedBox(height: 20,),
 
+            /*
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5.0),
               child: Text("UserName",
@@ -54,10 +55,12 @@ class _LoginState extends State<Login> {
                 fontSize: 16,
               )),
             ),
+            */
 
             TextField(
               controller: userNameController,
               decoration: InputDecoration(
+                labelText: "Username",
                 contentPadding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 15),
                 suffixIcon: Icon(Icons.person),
                 hintText: 'johndoe@ie.com',
@@ -73,8 +76,9 @@ class _LoginState extends State<Login> {
               ),
             ),
 
-            SizedBox(height: 10,),
+            SizedBox(height: 15,),
 
+            /*
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text("Password",
@@ -82,11 +86,13 @@ class _LoginState extends State<Login> {
                     fontSize: 16,
                   )),
             ),
+            */
 
             TextField(
               controller: passwordController,
               obscureText: hidePwd,
               decoration: InputDecoration(
+                labelText: "Password",
                 focusColor: Theme.of(context).highlightColor,
                 contentPadding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 15),
                 suffixIcon: IconButton(
@@ -137,7 +143,7 @@ class _LoginState extends State<Login> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).highlightColor,
+                  color: Theme.of(context).primaryColor,
                   border: Border.all(color: Theme.of(context).highlightColor),
                   borderRadius: BorderRadius.circular(50),
                 ),

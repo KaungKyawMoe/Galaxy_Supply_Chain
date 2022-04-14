@@ -45,13 +45,25 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   }
 
+  void add() {
+      qty++;
+      CalculateAmount();
+  }
+
+  void remove() {
+      if (qty > 1) {
+        qty--;
+      }
+      CalculateAmount();
+  }
+
   void CalculateAmount(){
     setState((){
       if(selectedUnitType > 0){
         price = qty * unitList.where((x) => x.unittype == selectedUnitType).first.saleprice!.toDouble();
       }
       else{
-        price = qty * usrCode.saleprice!.toDouble();
+        price = qty * ( usrCode.saleprice ?? 0);
       }
     });
   }
@@ -59,155 +71,149 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
 
-
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(usrCode.description.toString()),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset('assets/images/default.png',
-            fit: BoxFit.fill,
-            height: 300,
-            width: double.infinity,),
-
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:[
-
-                  Text(usrCode.description.toString(),
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(5),
+          child: Container(
+            // color: Colors.black12,
+            width: 200,
+            height: 150,
+            child: Image.asset(usrCode.imageurl ?? 'assets/images/default.png'),
+            // child: PhotoView(
+            //   imageProvider: AssetImage('assets/images/strawbarry.jpg'),
+            // ),
+          ),
+        ),
+        Expanded(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: Text(
+                  usrCode.description.toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-
-                  Text(price.toString(),
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Row(
-                      children : unitList.isEmpty ? [] :
-                          unitList.map((x) {
-                            /*
-                            return InkWell(
-                              onTap: (){
-                                  selectedUnitType = x.unittype!.toInt();
-                                  CalculateAmount();
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(right: 10.0),
-                                padding: EdgeInsets.all(0.0),
-                                decoration:BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(35.0)),
-                                  border: Border.all(color: Colors.lightBlue),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 5,vertical: 5.0),
-                                      child: Text(x.shortdesc.toString(),
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                    ),
-                                  selectedUnitType != x.unittype!.toInt() ? SizedBox.shrink() :
-                                  Positioned(
-                                    top: 5,
-                                    right: 10.0,
-                                    child: Icon(
-                                      Icons.check_circle_outline_outlined,
-                                      color:Colors.lightBlue,
-                                      size: 24,
-                                    ),
-                                  ),
-                                ],
-                                ),
-                              ),
-                            );
-                            */
-
-                            return InkWell(
-                                onTap: (){
-                                  selectedUnitType = x.unittype!.toInt();
-                                  CalculateAmount();
-                                },
-                              child: Container(
-                                margin : EdgeInsets.symmetric(horizontal: 5),
-                                child: Chip(
-                                  avatar: selectedUnitType != x.unittype!.toInt() ? SizedBox.shrink() :
-                                  Icon(Icons.check,color: Colors.lightBlue,),
-                                  label: Text(x.shortdesc.toString()),
-                                ),
-                              ),
-                            );
-
-                          }).toList(),
-                    ),
-                  ),
-
-                  Row(
-                    children: [
-                      ElevatedButton(
-                          onPressed: (){
-                              qty++;
-                              CalculateAmount();
-                          },
-                          child: Icon(Icons.add)),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(qty.toString(),
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                          onPressed: (){
-                            if(qty > 1){
-                              qty--;
-                              CalculateAmount();
-                            }
-                          },
-                          child: Icon(Icons.remove)),
-                    ],
-                  ),
-
-                ]
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
-      bottomSheet: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.0),
-        child: ElevatedButton(
-          onPressed: (){
-            ShoppingCartItem item = ShoppingCartItem(usrcode: usrCode);
-            item.qty = qty;
-            item.unitType = selectedUnitType;
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: Text(
+                  '$price MMK',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87),
+                ),
+              ),
 
-            Provider.of<ShoppingCartProvider>(context,listen:false).AddToCart(item);
-
-          },
-          child: SizedBox(
-            width: double.infinity,
-            child: Text("Add To Cart",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,)),
+              unitList.length == 0 ? SizedBox.shrink() :
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: unitList.map((x){
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ConstrainedBox(
+                      constraints:
+                      BoxConstraints.tightFor(width: 55, height: 24),
+                      child: OutlinedButton(
+                        onPressed: null,
+                        child: Text(x.shortdesc.toString(),
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.black12),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ConstrainedBox(
+                    constraints:
+                    BoxConstraints.tightFor(width: 55, height: 30),
+                    child: ElevatedButton(
+                      child: const Text(
+                        '-',
+                        style: TextStyle(
+                            fontSize: 28,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style:
+                      ElevatedButton.styleFrom(primary: Colors.white),
+                      onPressed: remove,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(18.0),
+                    child: Text(
+                      '$qty',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ConstrainedBox(
+                    constraints:
+                    BoxConstraints.tightFor(width: 55, height: 30),
+                    child: ElevatedButton(
+                      child: const Text(
+                        '+',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      style:
+                      ElevatedButton.styleFrom(primary: Colors.white),
+                      onPressed: add,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      )
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ConstrainedBox(
+                constraints:
+                BoxConstraints.tightFor(width: 180, height: 42),
+                child: ElevatedButton(
+                  child: const Text(
+                    'Add to Cart',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor),
+                  onPressed: () {
+                    ShoppingCartItem item = ShoppingCartItem(usrcode: usrCode);
+                    item.qty = qty;
+                    item.unitType = selectedUnitType;
+
+                    Provider.of<ShoppingCartProvider>(context,listen:false).AddToCart(item);
+                  },
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
