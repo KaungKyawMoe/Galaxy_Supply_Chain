@@ -1,38 +1,37 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_app/Common/apihelper.dart';
 import 'package:flutter_app/Common/npgsqldbtype.dart';
 import 'package:flutter_app/Common/parameterdirection.dart';
 import 'package:flutter_app/Common/parameterhelper.dart';
 import 'package:flutter_app/Common/sqlexecutiontypes.dart';
+import 'package:flutter_app/Models/OutstandDto.dart';
 import 'package:flutter_app/Services/ApiClient.dart';
 import 'package:flutter_app/Services/ApiResponse.dart';
 
-class ProductRepo{
-  
+class OutstandRepo{
+
   late ApiClient apiClient;
 
-  ProductRepo();
-  
-  Future<ApiResponse> GetProducts() async{
+  OutstandRepo();
 
+
+  Future<ApiResponse> GetOutstands(int customerId) async{
     ApiHelper apiHelper = ApiHelper();
-    apiHelper.StoredProcedureName = "GetMobileUsrCode";
-    apiHelper.IsStoredProcedure = true;
+    apiHelper.StoredProcedureName = 'getmobileoutstanding';
     apiHelper.SqlExecutionType = SqlExecutionTypes.ExecuteResult;
-    var parameters = <ParameterHelper>[];
-    parameters.add(
+    apiHelper.IsStoredProcedure = true;
+    apiHelper.Parameters = <List<ParameterHelper>>[];
+    List<ParameterHelper> paramList = <ParameterHelper>[];
+    paramList.add(
         ParameterHelper(
-            PsqlParameterName: "_usercode",
-            PsqlDbTypes: NpgsqlDbType.Varchar,
+            PsqlDbTypes: NpgsqlDbType.Integer,
             PsqlParameterDirection: ParameterDirection.Input,
-            PsqlParameterValue: null
+            PsqlParameterName: '_customerid',
+            PsqlParameterValue: customerId
         )
     );
-    apiHelper.Parameters = <List<ParameterHelper>>[];
-    apiHelper.Parameters!.add(parameters);
+    apiHelper.Parameters!.add(paramList);
 
     apiClient = ApiClient(Dio());
     ApiResponse response = ApiResponse();
@@ -49,17 +48,4 @@ class ProductRepo{
     return response;
   }
 
-  Future<ApiResponse> PlaceOrder(ApiHelper apiHelper) async{
-    ApiResponse response = ApiResponse();
-    var json = apiHelper.toJson();
-    try{
-      response.statusCode = 200;
-      response.data = await apiClient.Post(json);
-    }catch(e){
-      var res = e as Response;
-      response.statusCode = res.statusCode;
-      response.statusMessage = res.statusMessage;
-    }
-    return response;
-  }
 }

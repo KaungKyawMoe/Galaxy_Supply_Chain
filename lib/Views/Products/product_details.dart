@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/Models/ShoppingCartItem.dart';
 import 'package:flutter_app/Models/UnitDto.dart';
 import 'package:flutter_app/Models/UsrCodeDto.dart';
+import 'package:flutter_app/Providers/shoppingcart_provider.dart';
+import 'package:provider/provider.dart';
 class ProductDetails extends StatefulWidget {
 
 
@@ -94,6 +97,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Row(
                       children : unitList.isEmpty ? [] :
                           unitList.map((x) {
+                            /*
                             return InkWell(
                               onTap: (){
                                   selectedUnitType = x.unittype!.toInt();
@@ -130,6 +134,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             );
+                            */
+
+                            return InkWell(
+                                onTap: (){
+                                  selectedUnitType = x.unittype!.toInt();
+                                  CalculateAmount();
+                                },
+                              child: Container(
+                                margin : EdgeInsets.symmetric(horizontal: 5),
+                                child: Chip(
+                                  avatar: selectedUnitType != x.unittype!.toInt() ? SizedBox.shrink() :
+                                  Icon(Icons.check,color: Colors.lightBlue,),
+                                  label: Text(x.shortdesc.toString()),
+                                ),
+                              ),
+                            );
+
                           }).toList(),
                     ),
                   ),
@@ -170,7 +191,14 @@ class _ProductDetailsState extends State<ProductDetails> {
       bottomSheet: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.0),
         child: ElevatedButton(
-          onPressed: (){},
+          onPressed: (){
+            ShoppingCartItem item = ShoppingCartItem(usrcode: usrCode);
+            item.qty = qty;
+            item.unitType = selectedUnitType;
+
+            Provider.of<ShoppingCartProvider>(context,listen:false).AddToCart(item);
+
+          },
           child: SizedBox(
             width: double.infinity,
             child: Text("Add To Cart",

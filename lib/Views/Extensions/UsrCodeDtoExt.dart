@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-// import 'package:flutter_app/Models/UserDto.dart';
+import 'package:flutter_app/Models/UsrCodeDto.dart';
 
-/*
-extension UserDtoExt on UserDto{
+
+extension UsrCodeDtoExt on UsrCodeDto{
 
   Widget CustomText(String data){
 
@@ -29,7 +29,7 @@ extension UserDtoExt on UserDto{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText("Roll No"),
-                CustomText(rollNo.toString()),
+                CustomText(''.toString()),
               ],
             ),
           ),
@@ -41,7 +41,7 @@ extension UserDtoExt on UserDto{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText("Name"),
-                CustomText(Name.toString()),
+                CustomText(''.toString()),
               ],
             ),
           ),
@@ -53,7 +53,7 @@ extension UserDtoExt on UserDto{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText("Age"),
-                CustomText(Age.toString()),
+                CustomText(''.toString()),
               ],
             ),
           ),
@@ -63,4 +63,3 @@ extension UserDtoExt on UserDto{
   }
 
 }
-*/
