@@ -4,11 +4,11 @@ import 'package:flutter/widgets.dart';
 
 class Outstand extends StatefulWidget {
   @override
-  _frmoutstandState createState() => _frmoutstandState();
+  _OutstandState createState() => _OutstandState();
 
 }
 
-class _OutstandState extends State<frmoutstand> {
+class _OutstandState extends State<Outstand> {
   Icon searchicon = new Icon(Icons.search);
 
   @override
@@ -38,7 +38,7 @@ class _OutstandState extends State<frmoutstand> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.calendar_month_outlined),
+              icon: Icon(Icons.calendar_view_month),
               color: Colors.black,
               onPressed: () {
                 //pickDate(context);

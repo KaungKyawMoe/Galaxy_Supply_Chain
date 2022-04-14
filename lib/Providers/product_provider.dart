@@ -20,22 +20,8 @@ class ProductProvider extends ChangeNotifier{
   List<UsrCodeDto> usrCodeList = [];
 
   Future<void> GetUsrCode() async{
-    ApiHelper apiHelper = ApiHelper();
-    apiHelper.StoredProcedureName = "GetMobileUsrCode";
-    apiHelper.IsStoredProcedure = true;
-    apiHelper.SqlExecutionType = SqlExecutionTypes.ExecuteResult;
-    var parameters = <ParameterHelper>[];
-    parameters.add(
-      ParameterHelper(
-        PsqlParameterName: "_usercode",
-        PsqlDbTypes: NpgsqlDbType.Varchar,
-        PsqlParameterDirection: ParameterDirection.Input,
-        PsqlParameterValue: null
-      )
-    );
-    apiHelper.Parameters = <List<ParameterHelper>>[];
-    apiHelper.Parameters!.add(parameters);
-    ApiResponse apiResponse = await productRepo.GetProducts(apiHelper);
+
+    ApiResponse apiResponse = await productRepo.GetProducts();
 
     if(apiResponse.statusCode == 200){
       var result = jsonDecode(apiResponse.data);

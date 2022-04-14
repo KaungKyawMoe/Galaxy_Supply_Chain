@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Common/apihelper.dart';
+import 'package:flutter_app/Common/npgsqldbtype.dart';
+import 'package:flutter_app/Common/parameterdirection.dart';
+import 'package:flutter_app/Common/parameterhelper.dart';
+import 'package:flutter_app/Common/sqlexecutiontypes.dart';
 import 'package:flutter_app/Services/ApiClient.dart';
 import 'package:flutter_app/Services/ApiResponse.dart';
 
@@ -12,7 +16,24 @@ class ProductRepo{
 
   ProductRepo();
   
-  Future<ApiResponse> GetProducts(ApiHelper apiHelper) async{
+  Future<ApiResponse> GetProducts() async{
+
+    ApiHelper apiHelper = ApiHelper();
+    apiHelper.StoredProcedureName = "GetMobileUsrCode";
+    apiHelper.IsStoredProcedure = true;
+    apiHelper.SqlExecutionType = SqlExecutionTypes.ExecuteResult;
+    var parameters = <ParameterHelper>[];
+    parameters.add(
+        ParameterHelper(
+            PsqlParameterName: "_usercode",
+            PsqlDbTypes: NpgsqlDbType.Varchar,
+            PsqlParameterDirection: ParameterDirection.Input,
+            PsqlParameterValue: null
+        )
+    );
+    apiHelper.Parameters = <List<ParameterHelper>>[];
+    apiHelper.Parameters!.add(parameters);
+
     apiClient = ApiClient(Dio());
     ApiResponse response = ApiResponse();
     var json = apiHelper.toJson();
