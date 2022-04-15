@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_app/Models/ShoppingCartItem.dart';
 import 'package:flutter_app/Models/UnitDto.dart';
 import 'package:flutter_app/Models/UsrCodeDto.dart';
 import 'package:flutter_app/Providers/shoppingcart_provider.dart';
+import 'package:flutter_app/Views/Common/CustomSmButton.dart';
 import 'package:provider/provider.dart';
 class ProductDetails extends StatefulWidget {
 
@@ -28,6 +30,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   int selectedUnitType = 0;
 
+  UnitDto selectedUnitDto = UnitDto();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -38,6 +42,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     unitList = usrCode.units == null ? [] : usrCode.units!;
 
     if(unitList.isNotEmpty){
+      selectedUnitDto = unitList.first;
       selectedUnitType = int.parse(unitList.first.unittype.toString());
     }
 
@@ -74,22 +79,20 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(3),
           child: Container(
             // color: Colors.black12,
             width: 200,
             height: 150,
-            child: Image.asset(usrCode.imageurl ?? 'assets/images/default.png'),
-            // child: PhotoView(
-            //   imageProvider: AssetImage('assets/images/strawbarry.jpg'),
-            // ),
+            child: Image.asset(usrCode.imageurl ?? 'assets/images/jewel.jpg'),
           ),
         ),
         Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
+                padding: EdgeInsets.symmetric(vertical: 2),
                 child: Text(
                   usrCode.description.toString(),
                   textAlign: TextAlign.center,
@@ -101,7 +104,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
+                padding: EdgeInsets.symmetric(vertical: 2),
                 child: Text(
                   '$price MMK',
                   textAlign: TextAlign.center,
@@ -114,77 +117,56 @@ class _ProductDetailsState extends State<ProductDetails> {
 
               unitList.length == 0 ? SizedBox.shrink() :
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: unitList.map((x){
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ConstrainedBox(
-                      constraints:
-                      BoxConstraints.tightFor(width: 55, height: 24),
-                      child: OutlinedButton(
-                        onPressed: null,
-                        child: Text(x.shortdesc.toString(),
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                            backgroundColor: Colors.black12),
-                      ),
-                    ),
+                  return Expanded(
+                    child: RadioListTile<UnitDto>(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                        title: Text(x.shortdesc.toString()),
+                        value: x,
+                        groupValue: selectedUnitDto,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedUnitDto = value as UnitDto;
+                          });
+                        }),
                   );
                 }).toList(),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ConstrainedBox(
-                    constraints:
-                    BoxConstraints.tightFor(width: 55, height: 30),
-                    child: ElevatedButton(
-                      child: const Text(
-                        '-',
+
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 3.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    //Remove Button
+                    //Add Button
+                    CustomSmButton(Icon(Icons.remove), remove),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        '$qty',
                         style: TextStyle(
-                            fontSize: 28,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      style:
-                      ElevatedButton.styleFrom(primary: Colors.white),
-                      onPressed: remove,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(18.0),
-                    child: Text(
-                      '$qty',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  ConstrainedBox(
-                    constraints:
-                    BoxConstraints.tightFor(width: 55, height: 30),
-                    child: ElevatedButton(
-                      child: const Text(
-                        '+',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      style:
-                      ElevatedButton.styleFrom(primary: Colors.white),
-                      onPressed: add,
-                    ),
-                  ),
-                ],
+
+                    //Add Button
+                    CustomSmButton(Icon(Icons.add), add),
+                  ],
+                ),
               ),
+
             ],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -204,7 +186,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   onPressed: () {
                     ShoppingCartItem item = ShoppingCartItem(usrcode: usrCode);
                     item.qty = qty;
-                    item.unitType = selectedUnitType;
+                    item.unitType = selectedUnitDto.unittype;
 
                     Provider.of<ShoppingCartProvider>(context,listen:false).AddToCart(item);
                   },

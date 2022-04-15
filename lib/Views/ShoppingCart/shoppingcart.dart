@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Providers/shoppingcart_provider.dart';
+import 'package:flutter_app/Views/Common/CustomSmButton.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 class ShoppingCart extends StatefulWidget {
   @override
@@ -7,6 +9,7 @@ class ShoppingCart extends StatefulWidget {
 }
 
 class _ShoppingCartState extends State<ShoppingCart> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,61 +19,210 @@ class _ShoppingCartState extends State<ShoppingCart> {
             Center(
               child : Text("Cart is Empty"),
             ) :
-            ListView(
-            children: shoppingCartProvider.cart.map((e){
-              return Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        /*
-                            Image.network(e.imageurl.toString(),
-                              width: 100,
-                              height: 50,),
-                             */
-                        Image.asset('assets/images/default.png',
-                          height: 100,width: 100,),
-                        Expanded(
+            Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: shoppingCartProvider.cart.map((e){
+                      return Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset('assets/images/jewel.jpg',
+                                  width: 100,),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(e.usrcode.description.toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        Text("Price : " +NumberFormat.decimalPattern('en_us').format((e.unitType ?? 0) > 0 ?
+                                            e.usrcode.units!.where((x) => x.unittype == e.unitType).first.saleprice :
+                                            e.usrcode.saleprice),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        ( e.unitType ?? 0 ) == 0 ? SizedBox.shrink() :
+                                        Text("Unit : "+e.usrcode.units!.where((x) => x.unittype == e.unitType).first.shortdesc.toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        //Button
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+
+                                            //Remove
+                                            CustomSmButton(Icon(Icons.remove), (){
+                                              int qty = (e.qty ?? 0) - 1;
+                                              shoppingCartProvider.UpdateQty(e, qty);
+                                            }),
+
+                                            Padding(
+                                              padding: EdgeInsets.all(5.0),
+                                              child: Text(
+                                                '${e.qty}',
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+
+                                            //Add
+                                            /*
+                                            ConstrainedBox(
+                                              constraints:
+                                              BoxConstraints.tightFor(width: 55, height: 30),
+                                              child: ElevatedButton(
+                                                child: const Text(
+                                                  '+',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                style:
+                                                ElevatedButton.styleFrom(primary: Colors.white),
+                                                onPressed: (){
+                                                  int qty = (e.qty ?? 0) + 1;
+                                                  shoppingCartProvider.UpdateQty(e, qty);
+                                                },
+                                              ),
+                                            ),
+                                            */
+                                            CustomSmButton(Icon(Icons.add), (){
+                                              int qty = (e.qty ?? 0) + 1;
+                                              shoppingCartProvider.UpdateQty(e, qty);
+                                            }),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: (){
+                                        shoppingCartProvider.RemoveFromCart(e);
+                                      },
+                                      icon: Icon(Icons.restore_from_trash),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+                Container(
+                  color: Theme.of(context).focusColor,
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SummaryText("Total Qty"),
+                          SummaryText("Total Amount"),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(e.usrcode.description.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),),
-                              Text(e.qty.toString()+" * "+
-                                  (e.unitType!.toInt() > 0 ?
-                                  e.usrcode.units!.where((x) => x.unittype == e.unitType).first.saleprice.toString() :
-                                  e.usrcode.saleprice.toString()),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),),
+                              SummaryText("${shoppingCartProvider.totalQty}"),
+                              SummaryText(NumberFormat.decimalPattern('en_us').format(shoppingCartProvider.totalAmount)),
                             ],
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: (){
-                                shoppingCartProvider.RemoveFromCart(e);
-                              },
-                              icon: Icon(Icons.restore_from_trash),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.indigo,
+                          ),
+                          onPressed: (){
+                            shoppingCartProvider.CheckOutOrder().then((value) {
+                              if(value){
+
+                                AlertDialog(
+                                  title: Text('Check Out'),  // To display the title it is optional
+                                  content: Text('Order is confirmed successfully !',
+                                    style:TextStyle(
+                                      color: Colors.green,
+                                    ),),   // Message which will be pop up on the screen
+                                  // Action widget which will provide the user to acknowledge the choice
+                                  actions: [
+                                    FlatButton(
+                                      textColor: Colors.black,
+                                      onPressed: () {},
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              }else{
+                                AlertDialog(
+                                  title: Text('Check Out'),  // To display the title it is optional
+                                  content: Text('Error occurs !',
+                                  style:TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                  ),   // Message which will be pop up on the screen
+                                  // Action widget which will provide the user to acknowledge the choice
+                                  actions: [
+                                    FlatButton(
+                                      textColor: Colors.black,
+                                      onPressed: () {},
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              }
+                            });
+                          },
+                          child: Text("Confirm Order"),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            }).toList(),
-          );
+              ],
+            );
         },
       ),
     );
   }
+}
+
+Widget SummaryText(String data){
+  return Text(
+    data,
+    style:TextStyle(
+      color:Colors.black,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    )
+  );
 }

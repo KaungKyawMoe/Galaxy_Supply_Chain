@@ -150,7 +150,9 @@ class _LoginState extends State<Login> {
                 width: double.infinity,
                 child:loading ? Center(
                   heightFactor: 0.65,
-                    child: CircularProgressIndicator()) :
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    )) :
                 Text(
                   "LOGIN",
                   style:TextStyle(

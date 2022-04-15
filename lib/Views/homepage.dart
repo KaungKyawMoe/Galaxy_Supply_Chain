@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   int countno = 0;
 
-  var widgetTitle = ["Sale","Categories","Cart","Outstand"];
+  var widgetTitle = ["Products","Categories","Carts","Outstand"];
   List<Widget> widgetList = [
     Products(),
     Categories(),

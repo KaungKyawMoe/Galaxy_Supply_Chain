@@ -61,21 +61,21 @@ class _ProductsState extends State<Products> {
                                 children: [
                                   Stack(
                                     children:[
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            bottomLeft: Radius.circular(5),
-                                          ),
-                                          color: Theme.of(context).accentColor,
-                                        ),
-                                        width: 5,
-                                        height:100,
-                                      ),
+                                      // Container(
+                                      //   decoration: BoxDecoration(
+                                      //     borderRadius: BorderRadius.only(
+                                      //       topLeft: Radius.circular(5),
+                                      //       bottomLeft: Radius.circular(5),
+                                      //     ),
+                                      //     color: Theme.of(context).accentColor,
+                                      //   ),
+                                      //   width: 5,
+                                      //   height:100,
+                                      // ),
                                       Container(
                                         width: 120,
                                         height: 100,
-                                        child: Image.asset(e.imageurl ?? 'assets/images/default.png'),
+                                        child: Image.asset(e.imageurl ?? 'assets/images/jewel.jpg'),
                                         // child: PhotoView(
                                         //   imageProvider:
                                         //   AssetImage('assets/images/strawbarry.jpg'),
@@ -84,7 +84,7 @@ class _ProductsState extends State<Products> {
                                     ],
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                                    padding: const EdgeInsets.fromLTRB(5, 8, 8, 8),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
