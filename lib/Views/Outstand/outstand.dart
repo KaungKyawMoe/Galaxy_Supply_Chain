@@ -90,6 +90,7 @@ class _OutstandState extends State<Outstand> {
               ]),
               SizedBox(height:5),
               Expanded(
+
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: outstandProvider.outstandList.map((x){
