@@ -1,10 +1,10 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Providers/product_provider.dart';
 import 'package:flutter_app/Providers/shoppingcart_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'Categories/Categories.dart';
 import 'Outstand/outstand.dart';
 import 'Products/products.dart';
 import 'ShoppingCart/shoppingcart.dart';
@@ -18,17 +18,15 @@ class _HomePageState extends State<HomePage> {
 
   int countno = 0;
 
-  var widgetTitle = ["Sale","Cart","Outstanding"];
-
-  int selectedIndex = 0;
-
+  var widgetTitle = ["Sale","Categories","Cart","Outstand"];
   List<Widget> widgetList = [
     Products(),
+    Categories(),
     ShoppingCart(),
-    Outstand(),
+    Outstand()
   ];
 
-  TextEditingController searchTextController = TextEditingController();
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,49 +34,107 @@ class _HomePageState extends State<HomePage> {
     var shoppingCartProvider = Provider.of<ShoppingCartProvider>(context,listen:true);
 
     return Scaffold(
-      appBar: selectedIndex > 0 ? AppBar(
-        title:Text(widgetTitle[selectedIndex])
-      ) :
-      AppBar(
-        title: Container(
-          width: double.infinity,
-          child:TextField(
-            controller: searchTextController,
-            decoration: InputDecoration(
-              hintText: 'search ...',
-              contentPadding: EdgeInsets.all(2.0),
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-                borderSide: BorderSide(
-                  color:Colors.black,
-                )
-              ),
-              prefixIcon: Icon(Icons.search),
-              suffixIcon: IconButton(
-                onPressed: (){
-                  setState((){
-                    searchTextController.text = "";
-                    Provider.of<ProductProvider>(context,listen:false).Search("");
-                  });
-                },
-                icon:Icon(Icons.clear)
+      appBar: AppBar(
+        title: Text(widgetTitle[selectedIndex]),
+        actions:
+        [
+          selectedIndex != 2 ?
+          InkWell(
+            onTap: (){
+              setState((){
+                selectedIndex = 2;
+              });
+            },
+            child: Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Badge(
+                padding: EdgeInsets.all(4.0),
+                showBadge: shoppingCartProvider.cart.length > 0 ? true : false,
+                badgeContent: Text(shoppingCartProvider.cart.length.toString(),
+                style:TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                )),
+                child: Icon(Icons.shopping_cart),
               ),
             ),
-            onSubmitted: (data){
-              Provider.of<ProductProvider>(context,listen:false).Search(data);
-            },
-          )
+          ) : SizedBox.shrink(),
+        ]
+      ),
+      body: widgetList[selectedIndex],
+      drawer: Drawer(
+        child:ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.contain,
+                    image: AssetImage('assets/images/default.png',)),
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Text('iOrder App',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.teal,
+              ),),
+            ),
+            ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+              leading: Icon(Icons.description),
+              title: const Text('Products'),
+              onTap: () {
+                Navigator.pop(context);
+
+                setState((){
+                  selectedIndex = 0;
+                });
+              },
+            ),
+            Divider(color: Theme.of(context).dividerColor,),
+            ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+              leading: Icon(Icons.grid_view),
+              title: const Text('Categories'),
+              onTap: () {
+                Navigator.pop(context);
+                setState((){
+                  selectedIndex = 1;
+                });
+              },
+            ),
+            Divider(color: Theme.of(context).dividerColor,),
+            ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+              leading: Icon(Icons.shopping_cart),
+              title: const Text('Carts'),
+              onTap: () {
+                Navigator.pop(context);
+                setState((){
+                  selectedIndex = 2;
+                });
+              },
+            ),
+            Divider(color: Theme.of(context).dividerColor,),
+            ListTile(
+              visualDensity: VisualDensity(horizontal: 0, vertical: -3),
+              leading: Icon(Icons.monetization_on),
+              title: const Text('Outstand'),
+              onTap: () {
+                Navigator.pop(context);
+                setState((){
+                  selectedIndex = 3;
+                });
+              },
+            ),
+          ],
         ),
       ),
-      body:Padding(
-        padding: EdgeInsets.all(8.0),
-        child: widgetList[selectedIndex],
-      ),
+      /*
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.white,
-        backgroundColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Colors.black,
         currentIndex: selectedIndex,
         onTap: (index){
           setState((){
@@ -88,7 +144,13 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.inventory),
-              label: "Sale"
+              label: "Sale",
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+          BottomNavigationBarItem(
+               icon: Icon(Icons.grid_view),
+               label: "Categories",
+            backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
               icon: Badge(
@@ -102,14 +164,17 @@ class _HomePageState extends State<HomePage> {
                 ),),
                 child: Icon(Icons.shopping_cart),
               ),
-              label: "Cart"
+              label: "Cart",
+            backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.payment),
-              label: "Outstand"
+              label: "Outstand",
+            backgroundColor: Theme.of(context).primaryColor,
           ),
         ],
       ),
+      */
     );
   }
 }

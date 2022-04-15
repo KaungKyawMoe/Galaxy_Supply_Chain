@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Providers/product_provider.dart';
+import 'package:flutter_app/Views/Common/SearchBar.dart';
 import 'package:flutter_app/Views/Products/product_details.dart';
 import 'package:provider/provider.dart';
 class Products extends StatefulWidget {
@@ -32,72 +33,93 @@ class _ProductsState extends State<Products> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProductProvider>(
-      builder: (context, productProvider, child) {
-        return ListView(
-          shrinkWrap: true,
-          children: productProvider.usrCodeList.map((e) {
-            return InkWell(
-              onTap: (){
-                //Navigator.push(context,MaterialPageRoute(builder: (context) => ProductDetails(e),));
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return ProductDetails(e);
-                    });
-              },
-              child: Card(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16.0, 8, 8, 8),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey.shade100),
-                              ),
-                              width: 90,
-                              height: 80,
-                              child: Image.asset(e.imageurl ?? 'assets/images/default.png'),
-                              // child: PhotoView(
-                              //   imageProvider:
-                              //   AssetImage('assets/images/strawbarry.jpg'),
-                              // ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children:[
+            SearchBar(),
+            Expanded(
+              child: Consumer<ProductProvider>(
+                builder: (context, productProvider, child) {
+                  return ListView(
+                    shrinkWrap: true,
+                    children: productProvider.usrCodeList.map((e) {
+                      return InkWell(
+                        onTap: (){
+                          //Navigator.push(context,MaterialPageRoute(builder: (context) => ProductDetails(e),));
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return ProductDetails(e);
+                              });
+                        },
+                        child: Card(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Row(
+                                children: [
+                                  Stack(
+                                    children:[
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(5),
+                                            bottomLeft: Radius.circular(5),
+                                          ),
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                        width: 5,
+                                        height:100,
+                                      ),
+                                      Container(
+                                        width: 120,
+                                        height: 100,
+                                        child: Image.asset(e.imageurl ?? 'assets/images/default.png'),
+                                        // child: PhotoView(
+                                        //   imageProvider:
+                                        //   AssetImage('assets/images/strawbarry.jpg'),
+                                        // ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
 
-                              Text(
-                                e.description.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                e.saleprice.toString(),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black),
-                              ),
+                                        Text(
+                                          e.description.toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          e.saleprice.toString(),
+                                          style: TextStyle(
+                                              fontSize: 16, color: Colors.black),
+                                        ),
 
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
               ),
-            );
-          }).toList(),
-        );
-      },
+            ),
+          ] ,
+        ),
+      ),
     );
   }
 }

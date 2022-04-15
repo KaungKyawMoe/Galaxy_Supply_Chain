@@ -45,124 +45,126 @@ class _OutstandState extends State<Outstand> {
   @override
   Widget build(BuildContext context) {
 
-    return Consumer<OutstandProvider>(
-      builder: (context, outstandProvider, child) {
-        return Column(
-          children: <Widget>[
-            Row(children: <Widget>[
+    return Scaffold(
+      body: Consumer<OutstandProvider>(
+        builder: (context, outstandProvider, child) {
+          return Column(
+            children: <Widget>[
+              Row(children: <Widget>[
+                Expanded(
+                    child: Text(
+                      "Date",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    )),
+                Expanded(
+                    child: Text(
+                      "Invoice No",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    )),
+                Expanded(
+                    child: Text(
+                      "Sale Type",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    )),
+                Expanded(
+                    child: Text(
+                      "Balance",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    )),
+              ]),
+              SizedBox(height:5),
               Expanded(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: outstandProvider.outstandList.map((x){
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3.0),
+                      child: Row(children: <Widget>[
+                        Expanded(
+                            child: Text(
+                              DateFormat('yyyy-MM-dd').format(x.date as DateTime),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            )),
+                        Expanded(
+                            child: Text(
+                              x.docid ?? "",
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            )),
+                        Expanded(
+                            child: Text(
+                              x.invoicetype.toString(),
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            )),
+                        Expanded(
+                            child: Text(
+                              x.amount.toString(),
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            )),
+                      ]),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(height:5),
+              Row(children: <Widget>[
+                Expanded(
                   child: Text(
-                    "Date",
-                    textAlign: TextAlign.start,
+                    "Total",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
-                  )),
-              Expanded(
+                  ),
+                ),
+
+                Expanded(
                   child: Text(
-                    "Invoice No",
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  )),
-              Expanded(
-                  child: Text(
-                    "Sale Type",
+                    myFormat.format(outstandProvider.totalAmount),
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
-                  )),
-              Expanded(
-                  child: Text(
-                    "Balance",
-                    textAlign: TextAlign.end,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  )),
-            ]),
-            SizedBox(height:5),
-            Expanded(
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: outstandProvider.outstandList.map((x){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3.0),
-                    child: Row(children: <Widget>[
-                      Expanded(
-                          child: Text(
-                            DateFormat('yyyy-MM-dd').format(x.date as DateTime),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          )),
-                      Expanded(
-                          child: Text(
-                            x.docid ?? "",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          )),
-                      Expanded(
-                          child: Text(
-                            x.invoicetype.toString(),
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          )),
-                      Expanded(
-                          child: Text(
-                            x.amount.toString(),
-                            textAlign: TextAlign.end,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          )),
-                    ]),
-                  );
-                }).toList(),
-              ),
-            ),
-            SizedBox(height:5),
-            Row(children: <Widget>[
-              Expanded(
-                child: Text(
-                  "Total",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
                   ),
                 ),
-              ),
-
-              Expanded(
-                child: Text(
-                  myFormat.format(outstandProvider.totalAmount),
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ]),
-          ],
-        );
-      },
+              ]),
+            ],
+          );
+        },
+      ),
     );
   }
 

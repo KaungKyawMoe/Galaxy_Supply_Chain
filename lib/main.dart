@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'First App',
       theme: ThemeData(
-        primaryColor: Colors.lightBlue,
+        primaryColor: Colors.indigo,
       ),
       home: Login(),
       initialRoute: '/',

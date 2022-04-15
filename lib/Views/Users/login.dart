@@ -143,7 +143,7 @@ class _LoginState extends State<Login> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                   border: Border.all(color: Theme.of(context).highlightColor),
                   borderRadius: BorderRadius.circular(50),
                 ),
