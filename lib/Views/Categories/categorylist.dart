@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Views/Categories/Categories.dart';
-import 'categories.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({Key? key}) : super(key: key);
@@ -22,7 +20,7 @@ class _CategoryListState extends State<CategoryList> {
         child: GridView.count(
           childAspectRatio: 90/73,
           crossAxisCount: 2,
-          children: List.generate(20, (index) => CategoryList()),
+          children: List.generate(20, (index) => Text('test')),
         ),
       )
     );

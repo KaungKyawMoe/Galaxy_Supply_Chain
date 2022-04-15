@@ -12,9 +12,9 @@ class CategoryProvider extends ChangeNotifier{
 
   CategoryProvider({required this.categoryRepo});
 
-  List<CategoryDto> categoryid = [];
+  List<CategoryDto> orgCategory = [];
 
-  List<CategoryDto> name= [];
+  List<CategoryDto> filteredCategory = [];
 
   Future<void> GetCategory() async{
 
@@ -23,18 +23,18 @@ class CategoryProvider extends ChangeNotifier{
     if(apiResponse.statusCode == 200){
       var result = jsonDecode(apiResponse.data);
       List<CategoryDto> category = (result as List).map((x) => CategoryDto.fromJson(x)).toList();
-      categoryid = categoryid;
-      name = name;
+      orgCategory = category;
+      filteredCategory = orgCategory;
     }
 
     notifyListeners();
   }
 
   Future<void> Search(String data) async{
-    var filteredCodeList = name.where((e) => e.name!.toLowerCase().contains(data)).toList();
+    var filteredCodeList = orgCategory.where((e) => e.name!.toLowerCase().contains(data)).toList();
 
     if(!filteredCodeList.isEmpty){
-      name = filteredCodeList;
+      filteredCategory = filteredCodeList;
       notifyListeners();
     }
 

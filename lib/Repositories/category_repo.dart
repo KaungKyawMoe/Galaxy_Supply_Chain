@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_app/Common/apihelper.dart';
 import 'package:flutter_app/Common/npgsqldbtype.dart';
 import 'package:flutter_app/Common/parameterdirection.dart';
@@ -26,7 +23,7 @@ class CategoryRepo{
     parameters.add(
         ParameterHelper(
             PsqlParameterName: "_categoryid",
-            PsqlDbTypes: NpgsqlDbType.Varchar,
+            PsqlDbTypes: NpgsqlDbType.Integer,
             PsqlParameterDirection: ParameterDirection.Input,
             PsqlParameterValue: null
         )
