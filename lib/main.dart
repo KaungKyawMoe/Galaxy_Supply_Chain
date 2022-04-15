@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Providers/category_provider.dart';
+import 'package:flutter_app/Repositories/category_repo.dart';
 import 'package:flutter_app/Repositories/outstand_repo.dart';
 import 'package:get_it/get_it.dart';
 import 'Providers/outstand_provider.dart';
@@ -20,11 +22,13 @@ registerGetIt(){
   sl.registerLazySingleton(() => ProductRepo());
   sl.registerLazySingleton(() => UserRepo());
   sl.registerLazySingleton(() => OutstandRepo());
+  sl.registerLazySingleton(() => CategoryRepo());
 
   sl.registerFactory(() => ProductProvider(productRepo: GetIt.instance()));
   sl.registerFactory(() => UserProvider(userRepo: GetIt.instance()));
   sl.registerFactory(() => ShoppingCartProvider());
   sl.registerFactory(() => OutstandProvider(repo: GetIt.instance()));
+  sl.registerFactory(() => CategoryProvider(categoryRepo: GetIt.instance()));
 }
 
 void main() {
@@ -42,6 +46,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => UserProvider(userRepo: GetIt.instance(),)),
           ChangeNotifierProvider(create: (_) => ProductProvider(productRepo: GetIt.instance(), )),
           ChangeNotifierProvider(create: (_) => OutstandProvider(repo: GetIt.instance(),)),
+          ChangeNotifierProvider(create: (_) => CategoryProvider(categoryRepo: GetIt.instance(),)),
         ],
         child: MyApp(),
     ),
