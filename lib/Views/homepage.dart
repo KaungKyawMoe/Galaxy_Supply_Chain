@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(widgetTitle[selectedIndex]),
         actions:
         [
-          selectedIndex != 2 ?
+          selectedIndex > 1 ?
           InkWell(
             onTap: (){
               setState((){

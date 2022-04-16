@@ -1,22 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app/Models/UserDto.dart';
-import 'package:flutter_app/Providers/outstand_provider.dart';
-import 'package:flutter_app/Providers/user_provider.dart';
-import 'package:flutter_app/Views/Outstand/outstand_detail.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_app/Models/OutstandDetailDto.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../../Models/UserDto.dart';
+import '../../Providers/outstanddetail_provider.dart';
+import '../../Providers/user_provider.dart';
 
-class Outstand extends StatefulWidget {
-  @override
-  _OutstandState createState() => _OutstandState();
+class OutstandDetail extends StatefulWidget {
 
+  int saletranid;
+  OutstandDetail(this.saletranid);
+
+  _OutstandDetailState createState() => _OutstandDetailState();
 }
 
-class _OutstandState extends State<Outstand> {
-
-  //Icon searchicon = new Icon(Icons.search);
+class _OutstandDetailState extends State<OutstandDetail> {
 
   late UserDto user;
 
@@ -28,7 +26,6 @@ class _OutstandState extends State<Outstand> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -36,8 +33,8 @@ class _OutstandState extends State<Outstand> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
-    if(isInit){
-      GetOutstandData();
+    if (isInit) {
+      GetOutstandDetailData(widget.saletranid);
 
       isInit = false;
     }
@@ -45,11 +42,15 @@ class _OutstandState extends State<Outstand> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      body: Consumer<OutstandProvider>(
-        builder: (context, outstandProvider, child) {
-          return Column(
+    return Consumer<OutstandDetailProvider>(
+      builder: (context, outstandDetailProvider, child) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
+            title: outstandDetailProvider.outstanddetailList.length > 0 ?
+            Text(outstandDetailProvider.outstanddetailList.first.docid.toString()) : SizedBox.shrink(),
+          ),
+          body: Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -65,8 +66,8 @@ class _OutstandState extends State<Outstand> {
                       )),
                   Expanded(
                       child: Text(
-                        "Invoice No",
-                        textAlign: TextAlign.justify,
+                        "Invoice Type",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -93,13 +94,13 @@ class _OutstandState extends State<Outstand> {
                 ]),
               ),
               SizedBox(height:7),
-             
+
               Expanded(
                 child: ListView(
                   scrollDirection: Axis.vertical,
-                  children: outstandProvider.outstandList.map((x){
-                        return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0.5),
+                  children: outstandDetailProvider.outstanddetailList.map((x){
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0.1),
                       child: Container(
                         height: 60,
                         width: double.infinity,
@@ -111,7 +112,7 @@ class _OutstandState extends State<Outstand> {
                             color: Color(0xccfafafa),
                             elevation: 2,
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.symmetric(horizontal: 10.0),
                               child: Row(children: <Widget>[
                                 Expanded(
                                     child: Text(
@@ -124,8 +125,8 @@ class _OutstandState extends State<Outstand> {
                                     )),
                                 Expanded(
                                     child: Text(
-                                      x.docid ?? "",
-                                      textAlign: TextAlign.justify,
+                                      x.invoicetype ?? '',
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
@@ -133,8 +134,8 @@ class _OutstandState extends State<Outstand> {
                                     )),
                                 Expanded(
                                     child: Text(
-                                      x.invoicetype.toString(),
-                                      textAlign: TextAlign.right,
+                                      x.Curr.toString(),
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
@@ -175,7 +176,7 @@ class _OutstandState extends State<Outstand> {
 
                   Expanded(
                     child: Text(
-                      myFormat.format(outstandProvider.totalAmount),
+                      myFormat.format(outstandDetailProvider.totalAmount),
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -186,30 +187,18 @@ class _OutstandState extends State<Outstand> {
                 ]),
               ),
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
-  Future<void> GetOutstandData() async{
+  Future<void> GetOutstandDetailData(int saletranid) async {
+    user = Provider
+        .of<UserProvider>(context, listen: false)
+        .user;
 
-    user = Provider.of<UserProvider>(context,listen:false).user;
-
-    Provider.of<OutstandProvider>(context,listen:false).GetOutstands(user.userid!.toInt());
-
+    Provider.of<OutstandDetailProvider>(context, listen: false)
+        .GetOutstandsDetail(user.userid!.toInt(), saletranid);
   }
 }
-
-
-
-// Future pickDate(BuildContext context) async {
-//   final initialDateRange = DateTimeRange(
-//       start: DateTime.now(), end: DateTime.now().add(Duration(hours: 24 * 3)));
-//   final newDateRange = await showDateRangePicker(
-//       context: context,
-//       firstDate: DateTime(DateTime.now().year - 5),
-//       lastDate: DateTime(DateTime.now().year + 5));
-//   if (newDateRange == null) return;
-// }
-
