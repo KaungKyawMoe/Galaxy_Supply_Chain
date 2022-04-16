@@ -90,7 +90,7 @@ class _ProductsState extends State<Products> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(5, 8, 8, 8),
+                                      padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [

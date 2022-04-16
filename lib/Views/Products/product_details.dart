@@ -203,7 +203,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8, 8, 8),
+                padding: const EdgeInsets.fromLTRB(16.0, 2, 8, 8),
                 child: Container(
                   color: Colors.black12,
                   width: 270,
@@ -216,14 +216,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                padding: const EdgeInsets.all(0),
                 child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
+                        children: [
                           Text(
                             usrCode.description.toString(),
                             style: TextStyle(
@@ -236,7 +236,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 14, 8, 0),
+                      padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -259,61 +259,63 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 width: 80,
                                 height: 56,
 
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      RadioListTile<UnitDto>(
-                                          contentPadding: const EdgeInsets.symmetric(
-                                              horizontal: 0,vertical: 0),
-                                          title: Text(x.shortdesc.toString()),
-                                          value: x,
-                                          groupValue: selectedUnitDto,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedUnitDto = value as UnitDto;
-                                            });
-                                          }),                                    ],
-                                  ),
-                                  // children: [
-                                  //   RadioListTile<UnitDto>(
-                                  //       contentPadding: const EdgeInsets.symmetric(
-                                  //           horizontal: 5),
-                                  //       title: Text(x.shortdesc.toString()),
-                                  //       value: x,
-                                  //       groupValue: selectedUnitDto,
-                                  //       onChanged: (value) {
-                                  //         setState(() {
-                                  //           selectedUnitDto = value as UnitDto;
-                                  //         });
-                                  //       }),
-                                  // ],
-
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    RadioListTile<UnitDto>(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 0, vertical: 0),
+                                        title: Text(x.shortdesc.toString()),
+                                        value: x,
+                                        groupValue: selectedUnitDto,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedUnitDto = value as UnitDto;
+                                          });
+                                        }),
+                                  ],
+                                ),
+                                // children: [
+                                //   RadioListTile<UnitDto>(
+                                //       contentPadding: const EdgeInsets.symmetric(
+                                //           horizontal: 5),
+                                //       title: Text(x.shortdesc.toString()),
+                                //       value: x,
+                                //       groupValue: selectedUnitDto,
+                                //       onChanged: (value) {
+                                //         setState(() {
+                                //           selectedUnitDto = value as UnitDto;
+                                //         });
+                                //       }),
+                                // ],
                               );
                             }).toList(),
                           ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ConstrainedBox(
-                          constraints:
-                              BoxConstraints.tightFor(width: 55, height: 30),
-                          child: ElevatedButton(
-                            child: const Text(
-                              '-',
-                              style: TextStyle(
-                                  fontSize: 28,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ConstrainedBox(
+                            constraints:
+                                BoxConstraints.tightFor(width: 55, height: 30),
+                            child: ElevatedButton(
+                              child: const Text(
+                                '-',
+                                style: TextStyle(
+                                    fontSize: 28,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.white),
+                              onPressed: remove,
                             ),
-                            style:
-                                ElevatedButton.styleFrom(primary: Colors.white),
-                            onPressed: remove,
                           ),
-                        ),
-
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(14,0,14,0),
+                            padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
                             child: Text(
                               '$qty',
                               style: TextStyle(
@@ -322,24 +324,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ),
                           ),
-
-                        ConstrainedBox(
-                          constraints:
-                              BoxConstraints.tightFor(width: 55, height: 30),
-                          child: ElevatedButton(
-                            child: const Text(
-                              '+',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                          ConstrainedBox(
+                            constraints:
+                                BoxConstraints.tightFor(width: 55, height: 30),
+                            child: ElevatedButton(
+                              child: const Text(
+                                '+',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.white),
+                              onPressed: add,
                             ),
-                            style:
-                                ElevatedButton.styleFrom(primary: Colors.white),
-                            onPressed: add,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
@@ -360,7 +362,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.black87),
                               onPressed: () {
-                                Navigator.pushNamed(context, '/shoppingcart');
+                                ShoppingCartItem item =
+                                    ShoppingCartItem(usrcode: usrCode);
+                                item.qty = qty;
+                                item.unitType = selectedUnitDto.unittype;
+
+                                Provider.of<ShoppingCartProvider>(context,
+                                        listen: false)
+                                    .AddToCart(item);
+                                Navigator.pop(context);
                               },
                             ),
                           ),
