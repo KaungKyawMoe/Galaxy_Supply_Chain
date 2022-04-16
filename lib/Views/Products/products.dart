@@ -54,61 +54,68 @@ class _ProductsState extends State<Products> {
                                 return ProductDetails(e);
                               });
                         },
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Stack(
-                                    children:[
-                                      // Container(
-                                      //   decoration: BoxDecoration(
-                                      //     borderRadius: BorderRadius.only(
-                                      //       topLeft: Radius.circular(5),
-                                      //       bottomLeft: Radius.circular(5),
-                                      //     ),
-                                      //     color: Theme.of(context).accentColor,
-                                      //   ),
-                                      //   width: 5,
-                                      //   height:100,
-                                      // ),
-                                      Container(
-                                        width: 120,
-                                        height: 100,
-                                        child: Image.asset(e.imageurl ?? 'assets/images/jewel.jpg'),
-                                        // child: PhotoView(
-                                        //   imageProvider:
-                                        //   AssetImage('assets/images/strawbarry.jpg'),
-                                        // ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(5, 8, 8, 8),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
+                        child: Padding(
 
-                                        Text(
-                                          e.description.toString(),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
+                          padding: const EdgeInsets.fromLTRB(8,1,8,1),
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Stack(
+                                      children:[
+                                        // Container(
+                                        //   decoration: BoxDecoration(
+                                        //     borderRadius: BorderRadius.only(
+                                        //       topLeft: Radius.circular(5),
+                                        //       bottomLeft: Radius.circular(5),
+                                        //     ),
+                                        //     color: Theme.of(context).accentColor,
+                                        //   ),
+                                        //   width: 5,
+                                        //   height:100,
+                                        // ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(0),
+                                          child: Container(
+                                            width: 100,
+                                            height: 95,
+                                            child: Image.asset(e.imageurl ?? 'assets/images/jewel.jpg',width: double.infinity,fit: BoxFit.cover,),
+                                            // child: PhotoView(
+                                            //   imageProvider:
+                                            //   AssetImage('assets/images/strawbarry.jpg'),
+                                            // ),
                                           ),
                                         ),
-                                        Text(
-                                          e.saleprice.toString(),
-                                          style: TextStyle(
-                                              fontSize: 16, color: Colors.black),
-                                        ),
-
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
-                            ],
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(5, 8, 8, 8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+
+                                          Text(
+                                            e.description.toString(),
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            e.saleprice.toString(),
+                                            style: TextStyle(
+                                                fontSize: 16, color: Colors.black),
+                                          ),
+
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
