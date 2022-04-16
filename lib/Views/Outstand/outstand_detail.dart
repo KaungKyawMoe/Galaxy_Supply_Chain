@@ -104,54 +104,49 @@ class _OutstandDetailState extends State<OutstandDetail> {
                       child: Container(
                         height: 60,
                         width: double.infinity,
-                        child: InkWell(
-                          onTap: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => OutstandDetail(x.saletranid ?? 0 )));
-                          },
-                          child: Card(
-                            color: Color(0xccfafafa),
-                            elevation: 2,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Row(children: <Widget>[
-                                Expanded(
-                                    child: Text(
-                                      DateFormat('yyyy-MM-dd').format(x.date as DateTime),
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: Text(
-                                      x.invoicetype ?? '',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: Text(
-                                      x.Curr.toString(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    )),
-                                Expanded(
-                                    child: Text(
-                                      x.amount.toString(),
-                                      textAlign: TextAlign.end,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    )),
-                              ]),
-                            ),
+                        child: Card(
+                          color: Color(0xccfafafa),
+                          elevation: 0.3,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(children: <Widget>[
+                              Expanded(
+                                  child: Text(
+                                    DateFormat('yyyy-MM-dd').format(x.date as DateTime),
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                              Expanded(
+                                  child: Text(
+                                    x.invoicetype ?? '',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                              Expanded(
+                                  child: Text(
+                                    x.Curr.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                              Expanded(
+                                  child: Text(
+                                    x.amount.toString(),
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  )),
+                            ]),
                           ),
                         ),
                       ),
