@@ -69,16 +69,17 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.contain,
-                    image: AssetImage('assets/images/icon.png',)),
-                color: Colors.transparent,
-              ),
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //       image: AssetImage('assets/images/icon.png')),
+              //   color: Colors.transparent,
+              // ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Image.asset('assets/images/icon.png',
+                  width: 100,height:100,),
                   Text('iOrder App',
                   style: TextStyle(
                     fontSize: 20,
