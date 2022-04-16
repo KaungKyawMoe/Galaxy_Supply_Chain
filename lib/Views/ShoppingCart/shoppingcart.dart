@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Providers/shoppingcart_provider.dart';
-import 'package:flutter_app/Views/Common/CustomSmButton.dart';
-import 'package:flutter_app/Views/ShoppingCart/shoppingcartitem.dart';
+import 'package:iOrderApp/Providers/shoppingcart_provider.dart';
+import 'package:iOrderApp/Views/Common/CustomSmButton.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 class ShoppingCart extends StatefulWidget {

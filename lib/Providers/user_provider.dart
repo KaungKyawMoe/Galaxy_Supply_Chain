@@ -1,9 +1,9 @@
 
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Models/UserDto.dart';
-import 'package:flutter_app/Repositories/user_repo.dart';
-import 'package:flutter_app/Services/ApiResponse.dart';
+import 'package:iOrderApp/Models/UserDto.dart';
+import 'package:iOrderApp/Repositories/user_repo.dart';
+import 'package:iOrderApp/Services/ApiResponse.dart';
 
 class UserProvider extends ChangeNotifier{
 

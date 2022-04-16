@@ -1,61 +1,47 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Models/UsrCodeDto.dart';
-
+import 'package:iOrderApp/Models/UsrCodeDto.dart';
 
 extension UsrCodeDtoExt on UsrCodeDto{
 
-  Widget CustomText(String data){
-
-    return Text(
-      data,
-      style: TextStyle(
-        fontSize: 20,
-        color: Colors.teal,
-      ),
-    );
-
-  }
-
-  Widget ListTile(){
+  Widget GetTile(){
     return Card(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
-            child:
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomText("Roll No"),
-                CustomText(''.toString()),
-              ],
-            ),
-          ),
+          Row(
+            children: [
+              Stack(
+                children:[
+                  Container(
+                    width: 120,
+                    height: 100,
+                    child: Image.asset(imageurl ?? 'assets/images/jewel.jpg'),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 8, 8, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
 
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
-            child:
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomText("Name"),
-                CustomText(''.toString()),
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
-            child:
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomText("Age"),
-                CustomText(''.toString()),
-              ],
-            ),
+                    Text(
+                      description.toString(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      saleprice.toString(),
+                      style: TextStyle(
+                          fontSize: 16, color: Colors.black),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ],
       ),
