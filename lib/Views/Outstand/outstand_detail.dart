@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Models/OutstandDetailDto.dart';
+import 'package:iOrderApp/Models/OutstandDetailDto.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../Models/UserDto.dart';
