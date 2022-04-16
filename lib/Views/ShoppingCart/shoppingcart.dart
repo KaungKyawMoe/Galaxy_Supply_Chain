@@ -139,75 +139,138 @@ class _ShoppingCartState extends State<ShoppingCart> {
                   color: Theme.of(context).focusColor,
                   padding: EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SummaryText("Total Qty"),
-                          SummaryText("Total Amount"),
-                        ],
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          Row(
                             children: [
-                              SummaryText("${shoppingCartProvider.totalQty}"),
-                              SummaryText(NumberFormat.decimalPattern('en_us').format(shoppingCartProvider.totalAmount)),
+                              SummaryText("Total Qty : "),
+                              SummaryAmount("${shoppingCartProvider.totalQty}"),
                             ],
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.indigo,
-                          ),
-                          onPressed: (){
-                            shoppingCartProvider.CheckOutOrder().then((value) {
-                              if(value){
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0,8.0,0,0),
+                            child: Row(
+                              children: [
+                                SummaryText("Total Amount : "),
+                                SummaryText(NumberFormat.decimalPattern('en_us').format(shoppingCartProvider.totalAmount)),
 
-                                AlertDialog(
-                                  title: Text('Check Out'),  // To display the title it is optional
-                                  content: Text('Order is confirmed successfully !',
-                                    style:TextStyle(
-                                      color: Colors.green,
-                                    ),),   // Message which will be pop up on the screen
-                                  // Action widget which will provide the user to acknowledge the choice
-                                  actions: [
-                                    FlatButton(
-                                      textColor: Colors.black,
-                                      onPressed: () {},
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              }else{
-                                AlertDialog(
-                                  title: Text('Check Out'),  // To display the title it is optional
-                                  content: Text('Error occurs !',
-                                  style:TextStyle(
-                                    color: Colors.red,
-                                  ),
-                                  ),   // Message which will be pop up on the screen
-                                  // Action widget which will provide the user to acknowledge the choice
-                                  actions: [
-                                    FlatButton(
-                                      textColor: Colors.black,
-                                      onPressed: () {},
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              }
-                            });
-                          },
-                          child: Text("Confirm Order"),
-                        ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.indigo,
+                              ),
+                              onPressed: (){
+                                shoppingCartProvider.CheckOutOrder().then((value) {
+                                  if(value){
+
+                                    AlertDialog(
+                                      title: Text('Check Out'),  // To display the title it is optional
+                                      content: Text('Order is confirmed successfully !',
+                                        style:TextStyle(
+                                          color: Colors.green,
+                                        ),),   // Message which will be pop up on the screen
+                                      // Action widget which will provide the user to acknowledge the choice
+                                      actions: [
+                                        FlatButton(
+                                          textColor: Colors.black,
+                                          onPressed: () {},
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  }else{
+                                    AlertDialog(
+                                      title: Text('Check Out'),  // To display the title it is optional
+                                      content: Text('Error occurs !',
+                                        style:TextStyle(
+                                          color: Colors.red,
+                                        ),
+                                      ),   // Message which will be pop up on the screen
+                                      // Action widget which will provide the user to acknowledge the choice
+                                      actions: [
+                                        FlatButton(
+                                          textColor: Colors.black,
+                                          onPressed: () {},
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                });
+                              },
+                              child: Text("Confirm Order"),
+                            ),
+                          ),
+                        ],
                       ),
+                      // Expanded(
+                      //   child: Padding(
+                      //     padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      //     child: Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.end,
+                      //       children: [
+                      //         SummaryText("${shoppingCartProvider.totalQty}"),
+                      //         SummaryText(NumberFormat.decimalPattern('en_us').format(shoppingCartProvider.totalAmount)),
+                      //         // Padding(
+                      //         //   padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      //         //   child: ElevatedButton(
+                      //         //     style: ElevatedButton.styleFrom(
+                      //         //       primary: Colors.indigo,
+                      //         //     ),
+                      //         //     onPressed: (){
+                      //         //       shoppingCartProvider.CheckOutOrder().then((value) {
+                      //         //         if(value){
+                      //         //
+                      //         //           AlertDialog(
+                      //         //             title: Text('Check Out'),  // To display the title it is optional
+                      //         //             content: Text('Order is confirmed successfully !',
+                      //         //               style:TextStyle(
+                      //         //                 color: Colors.green,
+                      //         //               ),),   // Message which will be pop up on the screen
+                      //         //             // Action widget which will provide the user to acknowledge the choice
+                      //         //             actions: [
+                      //         //               FlatButton(
+                      //         //                 textColor: Colors.black,
+                      //         //                 onPressed: () {},
+                      //         //                 child: Text('OK'),
+                      //         //               ),
+                      //         //             ],
+                      //         //           );
+                      //         //         }else{
+                      //         //           AlertDialog(
+                      //         //             title: Text('Check Out'),  // To display the title it is optional
+                      //         //             content: Text('Error occurs !',
+                      //         //               style:TextStyle(
+                      //         //                 color: Colors.red,
+                      //         //               ),
+                      //         //             ),   // Message which will be pop up on the screen
+                      //         //             // Action widget which will provide the user to acknowledge the choice
+                      //         //             actions: [
+                      //         //               FlatButton(
+                      //         //                 textColor: Colors.black,
+                      //         //                 onPressed: () {},
+                      //         //                 child: Text('OK'),
+                      //         //               ),
+                      //         //             ],
+                      //         //           );
+                      //         //         }
+                      //         //       });
+                      //         //     },
+                      //         //     child: Text("Confirm Order"),
+                      //         //   ),
+                      //         // ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+
                     ],
                   ),
                 ),
@@ -223,9 +286,20 @@ Widget SummaryText(String data){
   return Text(
     data,
     style:TextStyle(
-      color:Colors.black,
+      color:Colors.black54,
       fontSize: 18,
       fontWeight: FontWeight.bold,
     )
+  );
+}
+
+Widget SummaryAmount(String data){
+  return Text(
+      data,
+      style:TextStyle(
+        color:Colors.black87,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      )
   );
 }
