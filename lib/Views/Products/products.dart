@@ -43,6 +43,7 @@ class _ProductsState extends State<Products> {
     return SafeArea(
       child: Scaffold(
         appBar: widget.categoryDto != null ? AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           title: Text(widget.categoryDto!.name.toString()),
         ) : null,
         body: Column(
