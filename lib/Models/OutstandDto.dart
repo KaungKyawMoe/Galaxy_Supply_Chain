@@ -4,6 +4,9 @@ part 'OutstandDto.g.dart';
 
 @JsonSerializable()
 class OutstandDto {
+  @JsonKey(name: 'tranid')
+  int? saletranid;
+
   @JsonKey(name: 'date')
   DateTime? date;
 
@@ -16,7 +19,7 @@ class OutstandDto {
   @JsonKey(name: 'amount')
   double? amount;
 
-  OutstandDto({this.date, this.invoicetype, this.docid, this.amount});
+  OutstandDto({this.saletranid,this.date, this.invoicetype, this.docid, this.amount});
 
   factory OutstandDto.fromJson(Map<String, dynamic> json) =>
       _$OutstandDtoFromJson(json);
