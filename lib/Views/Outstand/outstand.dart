@@ -68,8 +68,8 @@ class _OutstandState extends State<Outstand> {
                       )),
                   Expanded(
                       child: Text(
-                        "Invoice No",
-                        textAlign: TextAlign.justify,
+                        "Inv No",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -77,8 +77,8 @@ class _OutstandState extends State<Outstand> {
                       )),
                   Expanded(
                       child: Text(
-                        "Currency",
-                        textAlign: TextAlign.right,
+                        "Curr",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -113,7 +113,7 @@ class _OutstandState extends State<Outstand> {
                           },
                           child: Card(
                             color: Color(0xccfafafa),
-                            elevation: 2,
+                            elevation: 1,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(children: <Widget>[
@@ -138,7 +138,7 @@ class _OutstandState extends State<Outstand> {
                                 Expanded(
                                     child: Text(
                                       x.invoicetype.toString(),
-                                      textAlign: TextAlign.right,
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,

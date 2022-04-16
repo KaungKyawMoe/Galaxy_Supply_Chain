@@ -66,7 +66,7 @@ class _OutstandDetailState extends State<OutstandDetail> {
                       )),
                   Expanded(
                       child: Text(
-                        "Invoice Type",
+                        "Inv Type",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -75,8 +75,8 @@ class _OutstandDetailState extends State<OutstandDetail> {
                       )),
                   Expanded(
                       child: Text(
-                        "Currency",
-                        textAlign: TextAlign.right,
+                        "Curr",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
