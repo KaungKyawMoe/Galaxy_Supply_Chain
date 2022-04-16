@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iOrderApp/Models/UserDto.dart';
 import 'package:iOrderApp/Providers/outstand_provider.dart';
@@ -102,9 +103,10 @@ class _OutstandState extends State<Outstand> {
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: outstandProvider.outstandList.map((x){
-                        return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0.5),
-                      child: Container(
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0.5),
+                        child: Container(
                         height: 60,
                         width: double.infinity,
                         child: InkWell(
@@ -131,8 +133,10 @@ class _OutstandState extends State<Outstand> {
                                       x.docid ?? "",
                                       textAlign: TextAlign.justify,
                                       style: TextStyle(
+                                        decoration: TextDecoration.underline,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
+                                        color: Colors.orange,
                                       ),
                                     )),
                                 Expanded(
@@ -159,6 +163,7 @@ class _OutstandState extends State<Outstand> {
                         ),
                       ),
                     );
+
                   }).toList(),
                 ),
               ),
