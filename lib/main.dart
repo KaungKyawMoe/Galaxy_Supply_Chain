@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:iOrderApp/Providers/category_provider.dart';
 import 'package:iOrderApp/Repositories/category_repo.dart';
 import 'package:iOrderApp/Repositories/outstand_repo.dart';
+import 'package:iOrderApp/Providers/category_provider.dart';
+import 'package:iOrderApp/Providers/outstanddetail_provider.dart';
+import 'package:iOrderApp/Repositories/category_repo.dart';
+import 'package:iOrderApp/Repositories/outstand_repo.dart';
+import 'package:iOrderApp/Repositories/outstanddetail_repo.dart';
 import 'package:get_it/get_it.dart';
 import 'Providers/outstand_provider.dart';
 import 'Providers/product_provider.dart';
@@ -23,12 +28,14 @@ registerGetIt(){
   sl.registerLazySingleton(() => UserRepo());
   sl.registerLazySingleton(() => OutstandRepo());
   sl.registerLazySingleton(() => CategoryRepo());
+  sl.registerLazySingleton(() => OutstandDetailRepo());
 
   sl.registerFactory(() => ProductProvider(productRepo: GetIt.instance()));
   sl.registerFactory(() => UserProvider(userRepo: GetIt.instance()));
   sl.registerFactory(() => ShoppingCartProvider());
   sl.registerFactory(() => OutstandProvider(repo: GetIt.instance()));
   sl.registerFactory(() => CategoryProvider(categoryRepo: GetIt.instance()));
+  sl.registerFactory(() => OutstandDetailProvider(detailRepo: GetIt.instance()));
 }
 
 void main() {
@@ -47,6 +54,7 @@ void main() {
           ChangeNotifierProvider(create: (_) => ProductProvider(productRepo: GetIt.instance(), )),
           ChangeNotifierProvider(create: (_) => OutstandProvider(repo: GetIt.instance(),)),
           ChangeNotifierProvider(create: (_) => CategoryProvider(categoryRepo: GetIt.instance(),)),
+          ChangeNotifierProvider(create: (_) => OutstandDetailProvider(detailRepo: GetIt.instance())),
         ],
         child: MyApp(),
     ),
