@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Providers/shoppingcart_provider.dart';
 import 'package:flutter_app/Views/Common/CustomSmButton.dart';
+import 'package:flutter_app/Views/ShoppingCart/shoppingcartitem.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 class ShoppingCart extends StatefulWidget {
@@ -24,108 +25,111 @@ class _ShoppingCartState extends State<ShoppingCart> {
                 Expanded(
                   child: ListView(
                     children: shoppingCartProvider.cart.map((e){
-                      return Card(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset('assets/images/jewel.jpg',
-                                  width: 100,),
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 5.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(e.usrcode.description.toString(),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        Text("Price : " +NumberFormat.decimalPattern('en_us').format((e.unitType ?? 0) > 0 ?
-                                            e.usrcode.units!.where((x) => x.unittype == e.unitType).first.saleprice :
-                                            e.usrcode.saleprice),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        ( e.unitType ?? 0 ) == 0 ? SizedBox.shrink() :
-                                        Text("Unit : "+e.usrcode.units!.where((x) => x.unittype == e.unitType).first.shortdesc.toString(),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        //Button
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-
-                                            //Remove
-                                            CustomSmButton(Icon(Icons.remove), (){
-                                              int qty = (e.qty ?? 0) - 1;
-                                              shoppingCartProvider.UpdateQty(e, qty);
-                                            }),
-
-                                            Padding(
-                                              padding: EdgeInsets.all(5.0),
-                                              child: Text(
-                                                '${e.qty}',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-
-                                            //Add
-                                            /*
-                                            ConstrainedBox(
-                                              constraints:
-                                              BoxConstraints.tightFor(width: 55, height: 30),
-                                              child: ElevatedButton(
-                                                child: const Text(
-                                                  '+',
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                                style:
-                                                ElevatedButton.styleFrom(primary: Colors.white),
-                                                onPressed: (){
-                                                  int qty = (e.qty ?? 0) + 1;
-                                                  shoppingCartProvider.UpdateQty(e, qty);
-                                                },
-                                              ),
-                                            ),
-                                            */
-                                            CustomSmButton(Icon(Icons.add), (){
-                                              int qty = (e.qty ?? 0) + 1;
-                                              shoppingCartProvider.UpdateQty(e, qty);
-                                            }),
-                                          ],
-                                        ),
-                                      ],
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0,2,8,0),
+                        child: Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,0,12,0),
+                                    child: Container(
+                                      child: Image.asset('assets/images/jewel.jpg',
+                                       width: double.infinity,fit: BoxFit.cover,),
+                                      width: 120,
+                                      height:100,
                                     ),
                                   ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      onPressed: (){
-                                        shoppingCartProvider.RemoveFromCart(e);
-                                      },
-                                      icon: Icon(Icons.restore_from_trash),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(e.usrcode.description.toString(),
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87
+                                            ),
+                                          ),
+                                          Text("" +NumberFormat.decimalPattern('en_us').format((e.unitType ?? 0) > 0 ?
+                                              e.usrcode.units!.where((x) => x.unittype == e.unitType).first.saleprice :
+                                              e.usrcode.saleprice)+"MMK",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black54
+                                            ),
+                                          ),
+                                          ( e.unitType ?? 0 ) == 0 ? SizedBox.shrink() :
+                                          Text("unit : "+e.usrcode.units!.where((x) => x.unittype == e.unitType).first.shortdesc.toString(),
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black54
+                                            ),
+                                          ),
+                                          //Button
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+
+                                              //Remove
+                                              CustomSmButton(Icon(Icons.remove), (){
+                                                int qty = (e.qty ?? 0) - 1;
+                                                shoppingCartProvider.UpdateQty(e, qty);
+                                              }),
+
+                                              Padding(
+                                                padding: EdgeInsets.all(5.0),
+                                                child: Text(
+                                                  '${e.qty}',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+
+                                              //Add
+                                              /*
+                                              ConstrainedBox(
+                                                constraints:
+                                                BoxConstraints.tightFor(width: 55, height: 30),
+                                                child: ElevatedButton(
+                                                  child: const Text(
+                                                    '+',
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold),
+                                                  ),
+                                                  style:
+                                                  ElevatedButton.styleFrom(primary: Colors.white),
+                                                  onPressed: (){
+                                                    int qty = (e.qty ?? 0) + 1;
+                                                    shoppingCartProvider.UpdateQty(e, qty);
+                                                  },
+                                                ),
+                                              ),
+                                              */
+                                              CustomSmButton(Icon(Icons.add), (){
+                                                int qty = (e.qty ?? 0) + 1;
+                                                shoppingCartProvider.UpdateQty(e, qty);
+                                              }),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     }).toList(),
