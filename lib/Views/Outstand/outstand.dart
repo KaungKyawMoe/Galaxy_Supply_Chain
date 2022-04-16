@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app/Models/UserDto.dart';
-import 'package:flutter_app/Providers/outstand_provider.dart';
-import 'package:flutter_app/Providers/user_provider.dart';
+import 'package:iOrderApp/Models/UserDto.dart';
+import 'package:iOrderApp/Providers/outstand_provider.dart';
+import 'package:iOrderApp/Providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 

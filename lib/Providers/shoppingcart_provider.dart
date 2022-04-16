@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Models/ShoppingCartItem.dart';
+import 'package:iOrderApp/Models/ShoppingCartItem.dart';
 
 class ShoppingCartProvider extends ChangeNotifier{
 

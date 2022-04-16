@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Providers/shoppingcart_provider.dart';
+import 'package:iOrderApp/Providers/shoppingcart_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'Categories/Categories.dart';
@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(widgetTitle[selectedIndex]),
         actions:
         [
@@ -71,14 +72,20 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.contain,
-                    image: AssetImage('assets/images/default.png',)),
-                color: Theme.of(context).primaryColor,
+                    image: AssetImage('assets/images/icon.png',)),
+                color: Colors.transparent,
               ),
-              child: Text('iOrder App',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.teal,
-              ),),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('iOrder App',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),),
+                ],
+              ),
             ),
             ListTile(
               visualDensity: VisualDensity(horizontal: 0, vertical: -3),

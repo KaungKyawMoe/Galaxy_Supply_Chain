@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Providers/category_provider.dart';
-import 'package:flutter_app/Repositories/category_repo.dart';
-import 'package:flutter_app/Repositories/outstand_repo.dart';
+import 'package:iOrderApp/Providers/category_provider.dart';
+import 'package:iOrderApp/Repositories/category_repo.dart';
+import 'package:iOrderApp/Repositories/outstand_repo.dart';
 import 'package:get_it/get_it.dart';
 import 'Providers/outstand_provider.dart';
 import 'Providers/product_provider.dart';

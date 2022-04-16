@@ -1,6 +1,6 @@
 
 import 'package:dio/dio.dart';
-import 'package:flutter_app/Common/globalhelper.dart';
+import 'package:iOrderApp/Common/globalhelper.dart';
 import 'package:retrofit/http.dart';
 part 'ApiClient.g.dart';
 @RestApi(baseUrl: GlobalHelper.baseUrl)

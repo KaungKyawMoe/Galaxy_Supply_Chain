@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/Providers/product_provider.dart';
-import 'package:flutter_app/Views/Common/SearchBar.dart';
-import 'package:flutter_app/Views/Products/product_details.dart';
+import 'package:iOrderApp/Models/CategoryDto.dart';
+import 'package:iOrderApp/Providers/product_provider.dart';
+import 'package:iOrderApp/Views/Common/SearchBar.dart';
+import 'package:iOrderApp/Views/Extensions/UsrCodeDtoExt.dart';
+import 'package:iOrderApp/Views/Products/product_details.dart';
 import 'package:provider/provider.dart';
 class Products extends StatefulWidget {
+
+  CategoryDto? categoryDto;
+  Products({this.categoryDto = null});
+
   @override
   _ProductsState createState() => _ProductsState();
 }
@@ -25,7 +31,7 @@ class _ProductsState extends State<Products> {
     super.didChangeDependencies();
 
     if(isInit){
-      Provider.of<ProductProvider>(context).GetUsrCode();
+      Provider.of<ProductProvider>(context).GetUsrCode(category: widget.categoryDto);
       isInit = false;
     }
 
@@ -36,6 +42,9 @@ class _ProductsState extends State<Products> {
 
     return SafeArea(
       child: Scaffold(
+        appBar: widget.categoryDto != null ? AppBar(
+          title: Text(widget.categoryDto!.name.toString()),
+        ) : null,
         body: Column(
           children:[
             SearchBar(),
@@ -44,7 +53,7 @@ class _ProductsState extends State<Products> {
                 builder: (context, productProvider, child) {
                   return ListView(
                     shrinkWrap: true,
-                    children: productProvider.usrCodeList.map((e) {
+                    children: productProvider.filteredUsrCodeList.map((e) {
                       return InkWell(
                         onTap: (){
                           //Navigator.push(context,MaterialPageRoute(builder: (context) => ProductDetails(e),));
@@ -54,63 +63,7 @@ class _ProductsState extends State<Products> {
                                 return ProductDetails(e);
                               });
                         },
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Stack(
-                                    children:[
-                                      // Container(
-                                      //   decoration: BoxDecoration(
-                                      //     borderRadius: BorderRadius.only(
-                                      //       topLeft: Radius.circular(5),
-                                      //       bottomLeft: Radius.circular(5),
-                                      //     ),
-                                      //     color: Theme.of(context).accentColor,
-                                      //   ),
-                                      //   width: 5,
-                                      //   height:100,
-                                      // ),
-                                      Container(
-                                        width: 120,
-                                        height: 100,
-                                        child: Image.asset(e.imageurl ?? 'assets/images/jewel.jpg'),
-                                        // child: PhotoView(
-                                        //   imageProvider:
-                                        //   AssetImage('assets/images/strawbarry.jpg'),
-                                        // ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(5, 8, 8, 8),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-
-                                        Text(
-                                          e.description.toString(),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          e.saleprice.toString(),
-                                          style: TextStyle(
-                                              fontSize: 16, color: Colors.black),
-                                        ),
-
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                        child: e.GetTile(),
                       );
                     }).toList(),
                   );

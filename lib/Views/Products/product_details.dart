@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_app/Models/ShoppingCartItem.dart';
-import 'package:flutter_app/Models/UnitDto.dart';
-import 'package:flutter_app/Models/UsrCodeDto.dart';
-import 'package:flutter_app/Providers/shoppingcart_provider.dart';
-import 'package:flutter_app/Views/Common/CustomSmButton.dart';
+import 'package:iOrderApp/Models/ShoppingCartItem.dart';
+import 'package:iOrderApp/Models/UnitDto.dart';
+import 'package:iOrderApp/Models/UsrCodeDto.dart';
+import 'package:iOrderApp/Providers/shoppingcart_provider.dart';
+import 'package:iOrderApp/Views/Common/CustomSmButton.dart';
 import 'package:provider/provider.dart';
 class ProductDetails extends StatefulWidget {
 

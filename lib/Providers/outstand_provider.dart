@@ -3,9 +3,9 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Models/OutstandDto.dart';
-import 'package:flutter_app/Repositories/outstand_repo.dart';
-import 'package:flutter_app/Services/ApiResponse.dart';
+import 'package:iOrderApp/Models/OutstandDto.dart';
+import 'package:iOrderApp/Repositories/outstand_repo.dart';
+import 'package:iOrderApp/Services/ApiResponse.dart';
 
 class OutstandProvider extends ChangeNotifier{
 
