@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Models/UserDto.dart';
-import 'package:flutter_app/Providers/user_provider.dart';
+import 'package:iOrderApp/Models/UserDto.dart';
+import 'package:iOrderApp/Providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../homepage.dart';
@@ -25,24 +25,26 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         //color: Theme.of(context).primaryColor,
         height: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Galaxy Supply Chain',
-                style:TextStyle(
-                  fontSize: 24,
-                ),
-                ),
-              ],
+            Image.asset('assets/images/icon.png',
+            width: 200,height: 150,),
+
+            SizedBox(height: 20,),
+
+            Text('iOrder',
+              style:TextStyle(
+                fontSize: 25,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
 
             SizedBox(height: 20,),

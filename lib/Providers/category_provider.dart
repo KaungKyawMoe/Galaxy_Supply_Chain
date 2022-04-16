@@ -2,9 +2,9 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Models/CategoryDto.dart';
-import 'package:flutter_app/Repositories/category_repo.dart';
-import 'package:flutter_app/Services/ApiResponse.dart';
+import 'package:iOrderApp/Models/CategoryDto.dart';
+import 'package:iOrderApp/Repositories/category_repo.dart';
+import 'package:iOrderApp/Services/ApiResponse.dart';
 
 class CategoryProvider extends ChangeNotifier{
 

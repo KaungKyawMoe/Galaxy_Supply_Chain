@@ -2,9 +2,10 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/Models/UsrCodeDto.dart';
-import 'package:flutter_app/Repositories/product_repo.dart';
-import 'package:flutter_app/Services/ApiResponse.dart';
+import 'package:iOrderApp/Models/CategoryDto.dart';
+import 'package:iOrderApp/Models/UsrCodeDto.dart';
+import 'package:iOrderApp/Repositories/product_repo.dart';
+import 'package:iOrderApp/Services/ApiResponse.dart';
 
 class ProductProvider extends ChangeNotifier{
 
@@ -12,11 +13,11 @@ class ProductProvider extends ChangeNotifier{
 
   ProductProvider({required this.productRepo});
 
-  List<UsrCodeDto> usrCodeList = [];
+  List<UsrCodeDto> filteredUsrCodeList = [];
 
   List<UsrCodeDto> orgUsrCodeList = [];
 
-  Future<void> GetUsrCode() async{
+  Future<void> GetUsrCode({CategoryDto? category = null}) async{
 
     ApiResponse apiResponse = await productRepo.GetProducts();
 
@@ -24,7 +25,16 @@ class ProductProvider extends ChangeNotifier{
       var result = jsonDecode(apiResponse.data);
       List<UsrCodeDto> usrCodes = (result as List).map((x) => UsrCodeDto.fromJson(x)).toList();
       orgUsrCodeList = usrCodes;
-      usrCodeList = orgUsrCodeList;
+      filteredUsrCodeList = orgUsrCodeList;
+    }
+
+    if(category != null){
+      var filteredCodeList = orgUsrCodeList.where((e) => e.categoryid == category.categoryid).toList();
+
+      if(filteredCodeList.isNotEmpty){
+        orgUsrCodeList = filteredCodeList;
+        filteredUsrCodeList = filteredCodeList;
+      }
     }
 
     notifyListeners();
@@ -34,7 +44,7 @@ class ProductProvider extends ChangeNotifier{
      var filteredCodeList = orgUsrCodeList.where((e) => e.description!.toLowerCase().contains(data)).toList();
 
      if(!filteredCodeList.isEmpty){
-       usrCodeList = filteredCodeList;
+       filteredUsrCodeList = filteredCodeList;
        notifyListeners();
      }
 
