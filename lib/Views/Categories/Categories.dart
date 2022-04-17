@@ -32,9 +32,9 @@ class _CategoriesState extends State<Categories> {
         return SafeArea(
           child: Scaffold(
             body: Padding(
-              padding: EdgeInsets.only(top: 5.0),
+              padding: EdgeInsets.all(6),
               child: GridView.count(
-                childAspectRatio: 90/73,
+                childAspectRatio: 120/105,
                 crossAxisCount: 2,
                 children: cateProvider.filteredCategory.map((e){
                   return InkWell(

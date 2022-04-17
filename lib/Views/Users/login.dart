@@ -145,9 +145,9 @@ class _LoginState extends State<Login> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).primaryColor,
                   border: Border.all(color: Theme.of(context).highlightColor),
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 width: double.infinity,
                 child:loading ? Center(
@@ -159,6 +159,7 @@ class _LoginState extends State<Login> {
                   "LOGIN",
                   style:TextStyle(
                     fontSize: 20,
+                    color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 )

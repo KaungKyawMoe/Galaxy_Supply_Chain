@@ -90,7 +90,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     width: 270,
                     height: 170,
                     child: Image.asset(
-                      usrCode.imageurl ?? 'assets/images/jewel.jpg',
+                      usrCode.imageurl ?? 'assets/images/heartbracelet.jpg',
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
@@ -241,7 +241,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                    primary: Colors.black87),
+                                    primary: Theme.of(context).primaryColor),
                                 onPressed: () {
                                   ShoppingCartItem item =
                                       ShoppingCartItem(usrcode: usrCode);
