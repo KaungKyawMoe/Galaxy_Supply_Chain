@@ -139,7 +139,7 @@ class _OutstandDetailState extends State<OutstandDetail> {
                                   )),
                               Expanded(
                                   child: Text(
-                                    x.amount.toString(),
+                                    myFormat.format(x.amount),
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
