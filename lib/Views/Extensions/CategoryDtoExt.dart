@@ -8,6 +8,7 @@ extension CategoryDtoExt on CategoryDto{
   Widget GetTile(){
     return  Card(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             // color: Colors.black12,
@@ -17,10 +18,10 @@ extension CategoryDtoExt on CategoryDto{
                 fit: BoxFit.cover,)
 
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 6),
+          Center(
             child: Text(
               name.toString(),
+              textAlign : TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
