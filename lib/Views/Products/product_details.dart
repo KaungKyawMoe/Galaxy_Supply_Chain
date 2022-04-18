@@ -155,7 +155,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           onChanged: (value) {
                                             setState(() {
                                               selectedUnitDto = value as UnitDto;
-                                              price = double.parse(selectedUnitDto.saleprice.toString());
+                                              price = double.parse((selectedUnitDto.saleprice! * qty).toString());
+                                              selectedUnitType = selectedUnitDto.unittype!;
                                             });
                                           },
                                         activeColor: Theme.of(context).primaryColor,
