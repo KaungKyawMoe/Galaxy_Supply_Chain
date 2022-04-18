@@ -1,9 +1,12 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iOrderApp/Providers/category_provider.dart';
 import 'package:iOrderApp/Views/Extensions/CategoryDtoExt.dart';
 import 'package:iOrderApp/Views/Products/products.dart';
 import 'package:provider/provider.dart';
+
+import '../../Providers/shoppingcart_provider.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -27,6 +30,7 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
+
     return  Consumer<CategoryProvider>(
       builder: (context, cateProvider, child) {
         return SafeArea(

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:iOrderApp/Models/CategoryDto.dart';
 import 'package:iOrderApp/Models/ShoppingCartItem.dart';
@@ -7,6 +8,8 @@ import 'package:iOrderApp/Views/Extensions/UsrCodeDtoExt.dart';
 import 'package:iOrderApp/Views/Products/product_details.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import '../../Providers/shoppingcart_provider.dart';
 class Products extends StatefulWidget {
 
   CategoryDto? categoryDto;
@@ -39,15 +42,41 @@ class _ProductsState extends State<Products> {
     }
 
   }
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    var shoppingCartProvider = Provider.of<ShoppingCartProvider>(context,listen:true);
 
     return SafeArea(
       child: Scaffold(
         appBar: widget.categoryDto != null ? AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(widget.categoryDto!.name.toString()),
+            actions:
+            [
+              selectedIndex < 2 ?
+              InkWell(
+                onTap: (){
+                  setState((){
+                    selectedIndex = 2;
+                  });
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Badge(
+                    padding: EdgeInsets.all(4.0),
+                    showBadge: shoppingCartProvider.cart.length > 0 ? true : false,
+                    badgeContent: Text(shoppingCartProvider.cart.length.toString(),
+                        style:TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        )),
+                    child: Icon(Icons.shopping_cart),
+                  ),
+                ),
+              ) : SizedBox.shrink(),
+            ]
         ) : null,
         body: Column(
           children:[
