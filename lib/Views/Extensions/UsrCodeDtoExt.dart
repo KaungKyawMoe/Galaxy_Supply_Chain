@@ -42,7 +42,7 @@ extension UsrCodeDtoExt on UsrCodeDto{
                         padding: const EdgeInsets.fromLTRB(0,4,0,0),
                         child: Text(
                           // saleprice.toString(),
-                          myFormat.format(saleprice)+"MMK",
+                          myFormat.format(saleprice)+" MMK",
                           style: TextStyle(
                               fontSize: 17, color: Colors.black54,fontWeight: FontWeight.bold),
                         ),
