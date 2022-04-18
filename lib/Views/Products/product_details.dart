@@ -28,6 +28,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   int selectedUnitType = 0;
 
+  bool selected = true;
+
   UnitDto selectedUnitDto = UnitDto();
 
   @override
@@ -148,14 +150,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           contentPadding:
                                               const EdgeInsets.symmetric(
                                                   horizontal: 0, vertical: 0),
-                                          title: Text(x.shortdesc.toString()),
                                           value: x,
                                           groupValue: selectedUnitDto,
                                           onChanged: (value) {
                                             setState(() {
                                               selectedUnitDto = value as UnitDto;
+                                              price = double.parse(selectedUnitDto.saleprice.toString());
                                             });
-                                          }),
+                                          },
+                                        activeColor: Theme.of(context).primaryColor,
+                                        title: Text(x.shortdesc.toString(),
+                                        style: TextStyle(
+                                          color:Colors.black,
+                                          fontWeight: FontWeight.bold
+
+                                        ),),
+
+                                      ),
                                     ],
                                   ),
                                   // children: [

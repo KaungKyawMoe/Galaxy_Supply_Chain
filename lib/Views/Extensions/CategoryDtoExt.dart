@@ -12,7 +12,7 @@ extension CategoryDtoExt on CategoryDto{
           Container(
             // color: Colors.black12,
               height: 100,
-              child: Image.asset('assets/images/smoothie.webp',
+              child: Image.asset('assets/images/heartbracelet.jpg',
                 width: double.infinity,
                 fit: BoxFit.cover,)
 
