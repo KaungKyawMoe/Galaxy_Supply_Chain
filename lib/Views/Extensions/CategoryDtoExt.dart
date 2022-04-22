@@ -17,15 +17,20 @@ extension CategoryDtoExt on CategoryDto{
                 fit: BoxFit.cover,)
 
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 4, 8, 6),
-            child: Text(
-              name.toString(),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  name.toString(),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
             ),
           )
         ],
